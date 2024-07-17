@@ -15,7 +15,7 @@ if __name__ == "__main__":
     put = stats.count_documents({"method": "PUT"})
     patch = stats.count_documents({"method": "PATCH"})
     delete = stats.count_documents({"method": "DELETE"})
-    status = stats.count_documents({"path": "/status"})
+    status = stats.count_documents({"method": "GET", "path": "/status"})
     print(f"{x} logs")
     print("Methods:")
     print(f"    method GET: {get}")
