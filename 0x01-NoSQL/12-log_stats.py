@@ -4,7 +4,9 @@ from pymongo import MongoClient
 
 
 if __name__ == "__main__":
-    '''rovides some stats about Nginx logs stored in MongoDB'''
+    '''
+    rovides some stats about Nginx logs stored in MongoDB
+    '''
     client = MongoClient('mongodb://127.0.0.1:27017')
     stats = client.logs.nginx
     x = stats.count_documents({})
