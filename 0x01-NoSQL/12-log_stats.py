@@ -1,26 +1,23 @@
 #!/usr/bin/env python3
-'''12. Log stats'''
+""" MongoDB Operations with Python using pymongo """
 from pymongo import MongoClient
 
-
 if __name__ == "__main__":
-    '''
-    rovides some stats about Nginx logs stored in MongoDB
-    '''
+    """ Provides some stats about Nginx logs stored in MongoDB """
     client = MongoClient('mongodb://127.0.0.1:27017')
-    stats = client.logs.nginx
-    x = stats.count_documents({})
-    get = stats.count_documents({"method": "GET"})
-    post = stats.count_documents({"method": "POST"})
-    put = stats.count_documents({"method": "PUT"})
-    patch = stats.count_documents({"method": "PATCH"})
-    delete = stats.count_documents({"method": "DELETE"})
-    status = stats.count_documents({"method": "GET", "path": "/status"})
-    print(f"{x} logs")
-    print("Methods:")
-    print(f"    method GET: {get}")
-    print(f"    method POST: {post}")
-    print(f"    method PUT: {put}")
-    print(f"    method PATCH: {patch}")
-    print(f"    method DELETE: {delete}")
-    print(f"{status} status check")
+    nginx_collection = client.logs.nginx
+
+    n_logs = nginx_collection.count_documents({})
+    print(f'{n_logs} logs')
+
+    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+    print('Methods:')
+    for method in methods:
+        count = nginx_collection.count_documents({"method": method})
+        print(f'\tmethod {method}: {count}')
+
+    status_check = nginx_collection.count_documents(
+        {"method": "GET", "path": "/status"}
+    )
+
+    print(f'{status_check} status check')
